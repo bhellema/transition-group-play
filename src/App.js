@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import CSSTransition from 'react-transition-group/CSSTransition';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
 import './App.css';
+import { Slide } from './Slide';
 
 export const App = props => {
   const [contacts, setContacts] = useState(['Harry', 'Ron', 'Hermoine', 'Hagrid', 'Hedwig']);
@@ -21,11 +20,9 @@ export const App = props => {
 
   return (
     <div>
-      <TransitionGroup className="container">
-        <CSSTransition in={true} appear={false} key={count} timeout={900} classNames="slide">
-          <h1>{currentContact}</h1>
-        </CSSTransition>
-      </TransitionGroup>
+      <Slide count={count}>
+        <h1>{currentContact}</h1>
+      </Slide>
       <div className="btn">
         <button onClick={nextContact}>next</button>
       </div>
