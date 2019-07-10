@@ -13,7 +13,13 @@ export const App = props => {
   return (
     <div>
       <button onClick={toggle}>Fade</button>
-      <Transition in={bool} timeout={400}>
+      <Transition
+        in={bool}
+        timeout={{ enter: 200, exit: 200 }}
+        onExiting={node => {
+          console.dir(node);
+        }}
+      >
         {status => (
           <div className={cn('defaultStyle', status)}>
             {console.log(status)}
