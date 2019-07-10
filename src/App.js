@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
-import Transition from 'react-transition-group/Transition';
-import cn from 'classnames';
+import CSSTransition from 'react-transition-group/CSSTransition';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import './App.css';
 
 export const App = props => {
-  const [bool, setBool] = useState(false);
+  const [contacts, setContacts] = useState(['Harry', 'Ron', 'Hermoine', 'Hagrid', 'Hedwig']);
+  const [count, setCount] = useState(0);
+  const [currentContact, setCurrentContact] = useState(undefined);
 
-  const toggle = () => {
-    setBool(!bool);
+  const nextContact = () => {
+    const l = contacts.length - 1;
+    if (count !== l) {
+      setCount(count + 1);
+      setCurrentContact(contacts[count + 1]);
+    } else {
+      setCount(0);
+      setCurrentContact(contacts[0]);
+    }
   };
 
   return (
     <div>
-      <button onClick={toggle}>Fade</button>
-      <Transition
-        in={bool}
-        timeout={{ enter: 200, exit: 200 }}
-        onExiting={node => {
-          console.dir(node);
-        }}
-      >
-        {status => (
-          <div className={cn('defaultStyle', status)}>
-            {console.log(status)}
-            <img src="https://images.pexels.com/photos/459793/pexels-photo-459793.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-          </div>
-        )}
-      </Transition>
+      <TransitionGroup className="container">
+        <CSSTransition in={true} appear={false} key={count} timeout={900} classNames="slide">
+          <h1>{currentContact}</h1>
+        </CSSTransition>
+      </TransitionGroup>
+      <div className="btn">
+        <button onClick={nextContact}>next</button>
+      </div>
     </div>
   );
 };
