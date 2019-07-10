@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Transition from 'react-transition-group/Transition';
+import cn from 'classnames';
 import './App.css';
 
-function App() {
+export const App = props => {
+  const [bool, setBool] = useState(false);
+
+  const toggle = () => {
+    setBool(!bool);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={toggle}>Fade</button>
+      <Transition in={bool} timeout={400}>
+        {status => (
+          <div className={cn('defaultStyle', status)}>
+            {console.log(status)}
+            <img src="https://images.pexels.com/photos/459793/pexels-photo-459793.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
+          </div>
+        )}
+      </Transition>
     </div>
   );
-}
+};
 
 export default App;
